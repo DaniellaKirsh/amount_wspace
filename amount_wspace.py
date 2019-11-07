@@ -7,4 +7,4 @@ amount_df = pd.read_csv('Amount_Details_crosstab.csv', sep='\t', encoding='utf-1
 amount_df.dropna(axis=1, inplace=True)
 print(amount_df.head())
 
-val = 1
+val = 2
