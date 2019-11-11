@@ -1,7 +1,7 @@
 import sys
 import pandas as pd
-import numpy as np
-
+import datetime
+import os
 
 # slicing float where whitspace would be
 def slice_wspace_num(x):
@@ -25,7 +25,6 @@ def set_df(path):
 # creating a new df with rows with whitespace issues
 def update_df_ws(df):
     orig_columns = list(df.columns)
-    print(orig_columns)
     # renaming columns for comfort
     df.columns = ['Changed_Amount', 'image croppedImageId', 'Extd amount', 'Actl amount', 'Day of Ts Created']
     df['Actl cut'] = ""
@@ -46,10 +45,16 @@ def main():
 
     # creating df from cvs path
     df = set_df(sys.argv[1])
-
     # creating new df according requested update
     new_df = update_df_ws(df)
-    new_csv = new_df.to_csv(path_or_buf='/Users/daniellakirshenbaum/PycharmProjects/amount_ws/new_amounts.csv', sep='\t', encoding='utf-16le')
+    tme = datetime.datetime.now()
+    p = os.getcwd()
+    new_path = ""
+    if len(sys.argv)>2:
+        new_path = sys.argv[2]
+    else:
+        new_path = p + '/new_amounts_' + tme.strftime('%S\%M\%H\%a\%b\%y') + '.csv'
+    new_csv = new_df.to_csv(path_or_buf=new_path, sep='\t', encoding='utf-16le')
     return new_csv
 
 
